@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="jquery-3.4.1.min.js"></script>
+    <script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=1.4.8&key=9aa498732bfcfe03cfdf8bb174796390"></script>
+    <!--  异步版本 ui组件, 用于添加城市信息 -->
+    <script src="https://webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+    <!-- <script src="//webapi.amap.com/ui/1.0/main-async.js"></script> -->
+    <!-- 移动端开发时, 添加以下内容 -->
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+
+    </head>
+	
+<style>
+    #container {
+        width: 600px;
+        height: 480px;
+        display: inline-block;
+    }
+    #container1 {
+        width: 600px;
+        height: 480px;
+    }
+    #right{
+        float: left;
+        margin-top: 40px;
+    }
+</style>
+
+
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">公寓管理系统</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="/roombook">预定房间</a></li>
+                <li><a href="/location">公寓位置</a></li>
+                <li><a href="#">购买商品</a></li>
+                <li class="dropdown">
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">王峥 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+ 
+    <div id="container"> </div>
+    <div id='right'>
+        <div>
+            <div class='title'>选择模式</div>
+            <input type='radio' name='mode' value='dragMap' checked>拖拽地图模式</input>
+            <!-- </br> -->
+            <input type='radio' name='mode' value='dragMarker' checked>拖拽图标模式</input>
+        </div>
+        <div>
+            <button id='start'>开始选点</button>
+            <button id='stop'>关闭选点</button>
+        </div>
+        <div>
+            <div class='title'>选址结果</div>
+            <div class='c'>经纬度:</div>
+            <div id='lnglat'></div>
+            <div class='c'>地址:</div>
+            <div id='address'></div>
+            <div class='c'>最近的路口:</div>
+            <div id='nearestJunction'></div>
+            <div class='c'>最近的路:</div>
+            <div id='nearestRoad'></div>
+            <div class='c'>最近的POI:</div>
+            <div id='nearestPOI'></div>
+        </div>
+    </div>
+    <div id="container1"> </div>
+    <!-- 同步加载 -->
+    <!-- <script type="text/javascript">
+        var map = new AMap.Map('container', {
+            center: [117.000231, 36.456755],
+            zoom: 11
+        })
+    </script> -->
+ 
+    <!-- 异步加载,推荐使用, 异步加载指的是为 js API指定加载的回调函数,在 js API 的主体资源加载完毕之后,将自动调用该回调函数. 回调函数应该声明在 JS API入口文件引用之前,异步加载可以减少其对其他脚本执行的阻塞, -->
+    <script type="text/javascript">
+        // var position = new AMap.LngLat(116, 39);//标准写法
+        // var position = [116, 39]; //简写, 经纬度不能加引号
+ 
+        // 创建地图
+        // 如果不传入center坐标, 会默认定位到所在城市,可以使用插件进行自动定位
+        var map = new AMap.Map('container', {
+            // center: [117.000000, 38.000000], //设置地图中心点坐标
+            zoom: 14, //级别, 级别与地图尺寸成正比,越大越详细, web最小为3级,高德最大为20
+            viewMode: '2D', // 设置地图的显示样式
+            lang: 'zh_cn',  //设置地图语言类型
+            mapStyle: 'amap://styles/whitesmoke',  //设置地图的显示样式
+        });
+        // 加载一个(不使用数组)或多个插件
+        AMap.plugin(['AMap.ToolBar', 'AMap.Driving', 'AMap.CitySearch', 'Zepto'], function () {
+            var toolbar = new AMap.ToolBar(); //工具条, 地图的缩放,平移
+            map.addControl(toolbar);
+            // var driving = new AMap.Driving(); // 驾车路线规划
+            // driving.search("参数")
+ 
+            // ip定位
+            var citySearch = new AMAP.citySearch()
+            citySearch.getLocalCity(function (status, result) {
+                if (status === 'complete' && result.info === 'OK') {
+                    // 查询成功, result为当前所在城市信息
+                    // result.bounds  为当前所在经纬度, 113.315606,34.536169
+                    if (result && result.city && result.bounds) {
+                        var cityinfo = result.city;
+                        var citybounds = result.bounds;
+                        // document.getElementById('info').innerHTML = '您当前所在城市：' + result.bounds;
+                        //地图显示当前城市
+                        map.setBounds(citybounds);
+                    }
+                } else {
+                    // document.getElementById('info').innerHTML = result.info;
+                }
+            });
+ 
+        });
+ 
+ 
+        // 加载ui模块, 可以地图选点
+        // 'control/BasicControl' 多个地图图层的组件
+        // misc/PositionPicker 选坐标的组件
+        AMapUI.loadUI(['misc/PositionPicker', 'control/BasicControl'], function (PositionPicker) {
+            // 如果使用ui组件, map 则在ui组件里定义即可
+            var map = new AMap.Map('container', {
+                zoom: 16,
+                scrollWheel: false
+            })
+            var positionPicker = new PositionPicker({
+                mode: 'dragMarker',
+                map: map,
+                iconStyle: { //自定义外观
+                    url: 'https://webapi.amap.com/ui/1.0/assets/position-picker2.png',
+                    ancher: [24, 40],
+                    size: [48, 48]
+                }
+            });
+ 
+            positionPicker.on('success', function (positionResult) {
+                document.getElementById('lnglat').innerHTML = positionResult.position;
+                document.getElementById('address').innerHTML = positionResult.address;
+                document.getElementById('nearestJunction').innerHTML = positionResult.nearestJunction;
+                document.getElementById('nearestRoad').innerHTML = positionResult.nearestRoad;
+                document.getElementById('nearestPOI').innerHTML = positionResult.nearestPOI;
+            });
+            positionPicker.on('fail', function (positionResult) {
+                document.getElementById('lnglat').innerHTML = ' ';
+                document.getElementById('address').innerHTML = ' ';
+                document.getElementById('nearestJunction').innerHTML = ' ';
+                document.getElementById('nearestRoad').innerHTML = ' ';
+                document.getElementById('nearestPOI').innerHTML = ' ';
+            });
+            var onModeChange = function (e) {
+                positionPicker.setMode(e.target.value)
+            }
+            var startButton = document.getElementById('start');
+            var stopButton = document.getElementById('stop');
+            var dragMapMode = document.getElementsByName('mode')[0];
+            var dragMarkerMode = document.getElementsByName('mode')[1];
+            AMap.event.addDomListener(startButton, 'click', function () {
+                positionPicker.start(map.getBounds().getSouthWest())
+            })
+            AMap.event.addDomListener(stopButton, 'click', function () {
+                positionPicker.stop();
+            })
+            AMap.event.addDomListener(dragMapMode, 'change', onModeChange)
+            AMap.event.addDomListener(dragMarkerMode, 'change', onModeChange);
+            positionPicker.start();
+        })
+ 
+        //多个地图图层
+        AMapUI.loadUI(['control/BasicControl'], function (BasicControl) {
+            var layerCtrl1 = new BasicControl.LayerSwitcher({
+                position: 'tr'
+            });
+            var map1 = new AMap.Map('container1', {
+                //这里将layerCtrl中启用的图层传递给map
+                layers: layerCtrl1.getEnabledLayers()
+            });
+            map1.addControl(layerCtrl1);
+            var layerCtrl2 = new BasicControl.LayerSwitcher({
+                theme: 'dark',
+                //自定义基础图层
+                baseLayers: [{
+                    enable: true, //默认显示
+                    id: 'tile',
+                    name: '标准图',
+                    layer: new AMap.TileLayer()
+                }, {
+                    id: 'satellite',
+                    name: '卫星图',
+                    layer: new AMap.TileLayer.Satellite()
+                }],
+                //自定义覆盖图层
+                overlayLayers: [{
+                    enable: true,
+                    id: 'traffic',
+                    name: '路况图',
+                    layer: new AMap.TileLayer.Traffic()
+                }, {
+                    id: 'roadNet',
+                    name: '路网图',
+                    layer: new AMap.TileLayer.RoadNet()
+                }]
+            });
+            var map2 = new AMap.Map('container1', {
+                //这里将layerCtrl中启用的图层传递给map
+                layers: layerCtrl2.getEnabledLayers()
+            });
+            map2.addControl(layerCtrl2);
+        });
+ 
+ 
+ 
+        map.on('complete', function () {
+            // 地图加载完成后触发complete事件
+        })
+        // map.destroy(); // 销毁地图,并清空地图容器
+ 
+ 
+ 
+    </script>
+    <script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=1.4.8&key=9aa498732bfcfe03cfdf8bb174796390">
+	</script>
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
