@@ -1,0 +1,3 @@
+   *.js linguist-language=SpringBoot
+   *.css linguist-language=SpringBoot
+   *.html linguist-language=SpringBoot
