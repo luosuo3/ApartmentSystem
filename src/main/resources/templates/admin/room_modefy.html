@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>预约看房订单修改</title>
+</head>
+
+<body>
+
+<!-- Modal -->
+
+<div class="modal-header">
+    <button class="close" data-dismiss="modal">&times;</button>
+    <h4>客房信息修改</h4>
+</div>
+<div class="modal-body">
+
+    <form role="form">
+        <div class="form-group">
+            <label for="number">房间号</label>
+            <input type="number" class="form-control" id="number" placeholder="输入房间号">
+        </div>
+        <div class="form-group">
+            <label for="name">姓名</label>
+            <input type="text" class="form-control" id="name" placeholder="输入预定姓名">
+        </div>
+        <div class="form-group">
+            <label for="name">入住状态</label>
+            <select>
+                <option >已入住</option>
+                <option >已离店</option>
+            </select>
+            <label for="name">是否停用</label>
+            <select>
+                <option>是</option>
+                <option>否</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="data">入住日期</label>
+            <input type="date" class="form-control" id="data" placeholder="输入入住日期">
+        </div>
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary">确定</button>
+</div>
+
+
+
+</body>
+
+</html>
