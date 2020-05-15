@@ -2,18 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <title>商品管理</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/holder.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <script src="js/jquery-3.5.1.min.js"></script>
-    <script src="js/del.js"></script>
-
+    <link rel="stylesheet" href="css/bootstrap.css">
 
 </head>
 <body>
@@ -64,7 +59,6 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
-
 <div class="panel panel-default" style="margin-top: -20px;">
     <div class="comtent_1">
 
@@ -95,8 +89,7 @@
                                 <th>4.5</th>
                                 <th>20</th>
                                 <td>
-                                    <a href="" type="button" data-toggle="modal" data-target="#login-modal"
-                                       class="btn btn-success">修改</a>
+                                    <a  type="button" data-toggle="modal" data-target="#login-modal" class="btn btn-success">修改</a>
                                     <button type="button" class="btn btn-danger">删除</button>
                                 </td>
                             </tr>
@@ -104,30 +97,53 @@
                             </tbody>
                         </table>
                     </div>
-
-<!--                    <div class="modal fade" id="login-modal">-->
-<!--                        <div class="modal-dialog">-->
-<!--                            <div class="modal-content">-->
-<!--                                <div class="modal-header">-->
-<!--                                    <button class="close">&times;</button>-->
-<!--                                    <h4>修改</h4>-->
-<!--                                </div>-->
-<!--                                <div class="modal-body" >-->
-<!--                                    <p>修改的表单</p>-->
-<!--                                </div>-->
-<!--                                <div class="modal-footer">-->
-<!--                                    <button class="btn btn-primary">保存</button>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-
                 </div>
             </div>
         </div>
     </div>
 
 </div>
+
+<div class="modal fade" id="login-modal" tabindex="-1" data-remote="goods_modefy.html">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(function() {
+
+        $("html, body").animate({scrollTop: $('#'+domid).offset().top - 80 }, {duration: 500,easing: "swing"});
+
+        return false;
+
+        $('#login-modal').on('show.bs.modal', function() {
+            console.log('显示对话框');
+        });
+        $('#login-modal').on('shown.bs.modal', function() {
+            console.log('对话框已经显示了');
+        });
+        $('#login-modal').on('hide.bs.modal', function() {
+            console.log('隐藏对话框');
+        });
+        $('#login-modal').on('hidden.bs.modal', function() {
+            console.log('隐藏了对话框');
+        });
+        $('#login-modal').on('loaded.bs.modal', function() {
+            console.log('已经加载好了对话框里面的内容');
+        });
+        $('#slideshow').on('slide.bs.carousel', function() {
+            console.log('播放幻灯片');
+        });
+        $('#slideshow').on('slid.bs.carousel', function() {
+            console.log('播放完成！');
+        });
+    });
+</script>
+
 
 </body>
 </html>
