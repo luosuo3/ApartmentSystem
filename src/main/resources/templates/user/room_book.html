@@ -82,29 +82,26 @@
     </div><!-- /.container-fluid -->
 </nav>
 <div class="col-md-4" style="margin-left: 369px;">
-    <form >
+    <form action="/roombook" method="post">
         <div class="form-group">
             <label >姓名</label>
-            <input type="email" class="form-control"  placeholder="请输入姓名">
+            <input type="text" class="form-control"  placeholder="请输入姓名" name="username">
         </div>
         <div class="form-group">
             <label >身份证号</label>
-            <input type="password" class="form-control"  placeholder="请输入身份证号">
+            <input type="text" class="form-control"  placeholder="请输入身份证号" name="idCard">
         </div>
         <p>入住房间</p>
-        <select class="form-control">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+        <select class="form-control" name="room">
+            <option value="1">1</option>
+            <option value="2">2</option>
         </select>
         <div class="form-group ">
             <label>房间预定日期</label>
             <div class="myrow">
 
                 <div class='input-group date' style="width: 14em;" id='datetimepicker1'>
-                    <input type='text' class="timeInput form-control" />
+                    <input type='text' class="timeInput form-control" name="inTime" />
                     <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
 					</span>
@@ -113,16 +110,17 @@
 
                 </div>
                 <div class='input-group date' style="width: 14em;" id='datetimepicker2'>
-                    <input type='text' class="timeInput form-control" />
+                    <input type='text' class="timeInput form-control"  name="outTime"/>
                     <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
 					</span>
                 </div>
             </div>
         </div>
-        <p>预交定金100</p>
-        <select class="form-control">
-            <option>100</option>
+        <p>预交定金</p>
+        <select class="form-control" name="deposit">
+            <option value="100">100</option>
+            <option value="200">200</option>
         </select>
 
         <button type="submit" class="btn btn-default">Submit</button>

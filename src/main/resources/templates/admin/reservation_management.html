@@ -77,22 +77,29 @@
                                 <th>编号</th>
                                 <th>预定人姓名</th>
                                 <th>身份证号</th>
+                                <th>房间号</th>
                                 <th>预定时间</th>
+                                <th>离开时间</th>
                                 <th>定金</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th>1</th>
-                                <th>王慧凯</th>
-                                <th>130225*********</th>
-                                <th>2020年5月20日</th>
-                                <th>100</th>
+                            <tr th:each="bookroom : ${bookrooms}">
+                                <th th:text="${bookroom.id}">1</th>
+                                <th th:text="${bookroom.user_name}">王慧凯</th>
+                                <th th:text="${bookroom.id_card}">130225*********</th>
+                                <th th:text="${bookroom.room_nummber}"></th>
+                                <th th:text="${bookroom.in_time}">2020年5月20日</th>
+                                <th th:text="${bookroom.out_time}"></th>
+                                <th th:text="${bookroom.deposit}">100</th>
                                 <td>
                                     <a href="" type="button" data-toggle="modal" data-target="#login-modal"
                                        class="btn btn-success">修改</a>
-                                    <button type="button" class="btn btn-danger">删除</button>
+                                    <form action="" >
+                                        <button type="button" class="btn btn-danger" th:value="${bookroom.user_name}">删除</button>
+                                    </form>
+                                    <button type="button" class="btn  btn-primary">确认</button>
                                 </td>
                             </tr>
 
