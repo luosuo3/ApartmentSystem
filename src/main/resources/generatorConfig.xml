@@ -9,9 +9,10 @@
 
         <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/apartment_system"
+                        connectionURL="jdbc:mysql://localhost:3306/apartment_system?ullCatalogMeansCurrent=true&amp;useSSL=false"
                         userId="root"
                         password="123456789">
+            <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
 
         <javaTypeResolver>
@@ -33,6 +34,8 @@
         </javaClientGenerator>
 
         <table tableName="user" domainObjectName="User"/>
+        <table tableName="book_room" domainObjectName="BookRoom"/>
+
 
     </context>
 </generatorConfiguration>

@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 public class RoomController {
@@ -22,18 +24,18 @@ public class RoomController {
     }
 
     @PostMapping("/roombook")
-    public String addRoomBook(@RequestParam(name = "username",required = false) String username, @RequestParam(name = "idCard",required = false)String idCard, HttpServletRequest request) {
+    public String addRoomBook(@RequestParam(name = "username",required = false) String username, @RequestParam(name = "idCard",required = false)String idCard, HttpServletRequest request) throws ParseException {
         String room = request.getParameter("room");
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        String inTime = request.getParameter("inTime");
-        String outTime = request.getParameter("outTime");
+        Date inTime = sd.parse(request.getParameter("inTime"));
+        Date outTime = sd.parse(request.getParameter("outTime"));
         String deposit = request.getParameter("deposit");
         BookRoom bookRoom = new BookRoom();
-        bookRoom.setUser_name(username);
-        bookRoom.setId_card(idCard);
-        bookRoom.setRoom_nummber(Integer.parseInt(room));
-        bookRoom.setIn_time(inTime);
-        bookRoom.setOut_time(outTime);
+        bookRoom.setUserName(username);
+        bookRoom.setIdCard(idCard);
+        bookRoom.setRoomNummber(Integer.parseInt(room));
+        bookRoom.setInTime(inTime);
+        bookRoom.setOutTime(outTime);
 
         bookRoom.setDeposit(Integer.parseInt(deposit));
         bookRoomMapper.insert(bookRoom);

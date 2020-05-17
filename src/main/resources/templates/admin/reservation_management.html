@@ -85,19 +85,19 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="bookroom : ${bookrooms}">
-                                <th th:text="${bookroom.id}">1</th>
-                                <th th:text="${bookroom.user_name}">王慧凯</th>
-                                <th th:text="${bookroom.id_card}">130225*********</th>
-                                <th th:text="${bookroom.room_nummber}"></th>
-                                <th th:text="${bookroom.in_time}">2020年5月20日</th>
-                                <th th:text="${bookroom.out_time}"></th>
-                                <th th:text="${bookroom.deposit}">100</th>
+                            <tr th:each="bookRoom : ${bookRooms}">
+                                <th th:text="${bookRoom.id}">1</th>
+                                <th th:text="${bookRoom.userName}">王慧凯</th>
+                                <th th:text="${bookRoom.idCard}">130225*********</th>
+                                <th th:text="${bookRoom.roomNummber}"></th>
+                                <th th:text="${bookRoom.inTime}">2020年5月20日</th>
+                                <th th:text="${bookRoom.outTime}"></th>
+                                <th th:text="${bookRoom.deposit}">100</th>
                                 <td>
                                     <a href="" type="button" data-toggle="modal" data-target="#login-modal"
                                        class="btn btn-success">修改</a>
                                     <form action="" >
-                                        <button type="button" class="btn btn-danger" th:value="${bookroom.user_name}">删除</button>
+                                        <button type="button" class="btn btn-danger" th:value="${bookRoom.userName}">删除</button>
                                     </form>
                                     <button type="button" class="btn  btn-primary">确认</button>
                                 </td>
