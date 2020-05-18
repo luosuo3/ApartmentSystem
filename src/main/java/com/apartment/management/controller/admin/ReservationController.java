@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -16,8 +17,8 @@ public class ReservationController {
     BookRoomMapper bookRoomMapper;
     @GetMapping("/reservation_management")
     public String resetvation(Model model) {
-        BookRoomExample bookRoomExample = new BookRoomExample();
-         bookRoomExample.createCriteria().andIdCardIsNotNull();
+        BookRoomExample bookRoomExample =new BookRoomExample();
+        bookRoomExample.createCriteria().andIdIsNotNull();
         List<BookRoom> bookRooms = bookRoomMapper.selectByExample(bookRoomExample);
         model.addAttribute("bookRooms",bookRooms);
         return "/admin/reservation_management";

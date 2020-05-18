@@ -80,19 +80,30 @@
                                 <th>入住状态</th>
                                 <th>是否停用</th>
                                 <th>入住日期</th>
+                                <th>离开日期</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th>101</th>
-                                <th>王峥</th>
-                                <th>已入住</th>
-                                <th>否</th>
-                                <th>2020年5月10日</th>
+                            <tr th:each="roomManage :${roomManages}">
+                                <th th:text="${roomManage.roomNums}">101</th>
+                                <th th:text="${roomManage.username}">王峥</th>
+                                <th th:if="${roomManage.checkIn}==1">已入住</th>
+                                <th th:if="${roomManage.checkIn}==0">未入住</th>
+                                <th th:if="${roomManage.status}==0">否</th>
+                                <th th:if="${roomManage.status}==1">是</th>
+
+                                <th th:text="${roomManage.inTime}">2020年5月10日</th>
+                                <th th:text="${roomManage.outTime}">2020年5月10日</th>
                                 <td>
-                                    <a  type="button" data-toggle="modal" data-target="#login-modal" class="btn btn-success">修改</a>
-                                    <button type="button" class="btn btn-danger">禁用</button>
+                                    <form action="/room_modefy.html">
+                                        <a  type="button" data-toggle="modal" data-target="#login-modal" class="btn btn-success" th:value="${roomManage.roomNums}" name="roomNum">修改</a>
+
+                                    </form>
+
+                                    <form action="/banRoom" method="post">
+                                        <button type="submit" class="btn btn-danger" th:value="${roomManage.id}" name="id">禁用</button>
+                                    </form>
                                 </td>
                             </tr>
 
