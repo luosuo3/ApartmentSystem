@@ -4,14 +4,16 @@ import com.apartment.management.mapper.BookRoomMapper;
 import com.apartment.management.model.BookRoom;
 import com.apartment.management.model.BookRoomExample;
 import com.apartment.management.model.RoomManage;
+import com.apartment.management.model.RoomManageExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -19,6 +21,7 @@ public class ReservationController {
     private int resertId;
     @Autowired
     BookRoomMapper bookRoomMapper;
+
     @GetMapping("/reservation_management")
     public String resetvation(Model model) {
         BookRoomExample bookRoomExample =new BookRoomExample();
@@ -27,12 +30,54 @@ public class ReservationController {
         model.addAttribute("bookRooms",bookRooms);
         return "/admin/reservation_management";
     }
+
     @PostMapping("/getReserId")
-    public String getManageId(HttpServletRequest request, Model model) {
+    public String getReserId(HttpServletRequest request, Model model){
         String id = request.getParameter("id");
-        resertId = Integer.parseInt(id);
-        BookRoom bookRoom = bookRoomMapper.selectByPrimaryKey(Integer.valueOf(id));
-        model.addAttribute("bookroom", bookRoom);
+        resertId=Integer.parseInt(id);
+        BookRoom bookRoom=bookRoomMapper.selectByPrimaryKey(Integer.valueOf(id));
+        model.addAttribute("bookRoom",bookRoom);
         return "admin/reservation_modefy";
+    }
+
+
+    @PostMapping("/modefyReser")
+    public String modefyReser(HttpServletRequest request, Model model,
+                              @RequestParam(value = "userName" )String userName,
+                              @RequestParam(name = "idCard")String idCard,
+                              @RequestParam(name = "roomNummber")int roomNummber,
+                              @RequestParam(name = "inTime")String inTime,
+                              @RequestParam(name = "outTime")String outTime) throws ParseException {
+        String deposit = request.getParameter("deposit");
+        BookRoom bookRoom=new BookRoom();
+        bookRoom.setId(resertId);
+        bookRoom.setUserName(userName);
+        bookRoom.setIdCard(idCard);
+        bookRoom.setRoomNummber(roomNummber);
+        //        日期格式化
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+        Date inTime1 = sd.parse(inTime);
+        bookRoom.setInTime(inTime1);
+        Date outTime1=sd.parse(outTime);
+        bookRoom.setOutTime(outTime1);
+        bookRoom.setDeposit(Integer.valueOf(deposit));
+
+        bookRoomMapper.updateByPrimaryKey(bookRoom);
+        BookRoomExample bookRoomExample= new BookRoomExample();
+        bookRoomExample.createCriteria().andIdIsNotNull();
+        List<BookRoom> bookRooms=bookRoomMapper.selectByExample(bookRoomExample);
+        model.addAttribute("bookRooms",bookRooms);
+        return "/admin/reservation_management";
+    }
+    @PostMapping("/delectReser")
+    public String delectReser(HttpServletRequest request, Model model) {
+        String id = request.getParameter("id");
+        bookRoomMapper.deleteByPrimaryKey(Integer.valueOf(id));
+
+        BookRoomExample bookRoomExample=new BookRoomExample();
+        bookRoomExample.createCriteria().andIdIsNotNull();
+        List<BookRoom> bookRooms=bookRoomMapper.selectByExample(bookRoomExample);
+        model.addAttribute("bookRooms",bookRooms);
+        return "admin/reservation_management";
     }
 }

@@ -26,7 +26,7 @@ public class RoomController {
     @PostMapping("/roombook")
     public String addRoomBook(@RequestParam(name = "username",required = false) String username, @RequestParam(name = "idCard",required = false)String idCard, HttpServletRequest request) throws ParseException {
         String room = request.getParameter("room");
-        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
         Date inTime = sd.parse(request.getParameter("inTime"));
         Date outTime = sd.parse(request.getParameter("outTime"));
         String deposit = request.getParameter("deposit");

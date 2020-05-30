@@ -61,7 +61,11 @@ public class RoomManageController {
     }
 
     @PostMapping("/modefyRoom")
-    public String modefyRoom(HttpServletRequest request,Model model, @RequestParam(name = "roomNums" )int roomNums, @RequestParam(name = "username")String username, @RequestParam(name = "inTime")String inTime,@RequestParam(name = "outTime")String outTime) throws ParseException {
+    public String modefyRoom(HttpServletRequest request,Model model,
+                             @RequestParam(name = "roomNums" )int roomNums,
+                             @RequestParam(name = "username")String username,
+                             @RequestParam(name = "inTime")String inTime,
+                             @RequestParam(name = "outTime")String outTime) throws ParseException {
         String checkIn = request.getParameter("checkIn");
         String status = request.getParameter("status");
         RoomManage roomManage = new RoomManage();
