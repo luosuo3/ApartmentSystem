@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -64,41 +64,54 @@
 <div class="modal-header">
     <h4>预定客户信息修改</h4>
 </div>
-<div class="modal-body">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-offset-2 col-xs-offset-2 col-lg-offset-2">
 
-    <form role="form">
-        <div class="form-group">
-            <label for="name">姓名</label>
-            <input type="text" class="form-control" id="name" placeholder="输入预定姓名">
-        </div>
-        <div class="form-group">
-            <label for="number">身份证号</label>
-            <input type="number" class="form-control" id="number" placeholder="输入预定人身份证号">
-        </div>
-        <div class="form-group">
-            <label for="data">预定时间</label>
-            <input type="date" class="form-control" id="data" placeholder="输入预定时间">
-        </div>
-        <br>
-        <div class="form-group">
-            <label for="name">定金</label>
-            <select>
-                <option>50</option>
-                <option>100</option>
-                <option>150</option>
-                <option>200</option>
-                <option>250</option>
-                <option>300</option>
-            </select>
-        </div>
+            <div class="modal-body">
 
+                <form  action="/modefyReser" method="post">
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input type="text" th:value="${bookRoom.userName}" class="form-control" id="name" placeholder="输入预定姓名" name="userName">
+                    </div>
+                    <div class="form-group">
+                        <label for="number">身份证号</label>
+                        <input type="number" th:value="${bookRoom.idCard}" class="form-control" id="number" placeholder="输入预定人身份证号"  name="idCard">
+                    </div>
+                    <div class="form-group">
+                        <label for="num">房间号</label>
+                        <input type="number" th:value="${bookRoom.roomNummber}" class="form-control" id="num" placeholder="输入房间号" name="roomNummber">
+                    </div>
+                    <div class="form-group" id='datetimepicker1'>
+                        <label for="indata">预定时间</label>
+                        <input type="date" th:value="${#dates.format(bookRoom.inTime,'yyyy-MM-dd')}" class="form-control" id="indata" placeholder="输入预定时间"  name="inTime">
+                    </div>
+                    <div class="form-group" id='datetimepicker2'>
+                        <label for="outdata">离开时间</label>
+                        <input type="date" th:value="${#dates.format(bookRoom.outTime,'yyyy-MM-dd')}" class="form-control"  id="outdata" placeholder="输入离开时间" name="outTime">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="name">定金</label>
+                        <select th:value="${bookRoom.deposit}" name="deposit">
+                            <option>50</option>
+                            <option>100</option>
+                            <option>150</option>
+                            <option>200</option>
+                            <option>250</option>
+                            <option>300</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">确定</button>
+                    </div>
 
-    </form>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="modal-footer">
-    <button class="btn btn-primary">确定</button>
-</div>
-
 
 
 </body>

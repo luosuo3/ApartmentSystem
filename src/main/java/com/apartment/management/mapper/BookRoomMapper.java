@@ -100,6 +100,7 @@ public interface BookRoomMapper {
      * This method corresponds to the database table book_room
      *
      * @mbggenerated Sun May 17 22:12:23 CST 2020
+     * @param record
      */
     int updateByPrimaryKey(BookRoom record);
 }
