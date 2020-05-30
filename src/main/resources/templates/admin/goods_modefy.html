@@ -4,38 +4,45 @@
     <meta charset="UTF-8">
     <title>商品管理修改</title>
 </head>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/holder.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="css/bootstrap.css">
 <body>
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="js/app.js"></script>
-<script src="js/holder.js"></script>
-<script src="js/bootstrap.min.js"></script>
+
 <!-- Modal -->
 
 <div class="modal-header">
     <button class="close" data-dismiss="modal">&times;</button>
     <h4>商品信息修改</h4>
 </div>
-<div class="modal-body">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-offset-2 col-xs-offset-2 col-lg-offset-2">
+            <div class="modal-body">
 
-    <form role="form">
-        <div class="form-group">
-            <label for="goods_id">编号</label>
-            <input type="number" class="form-control" id="goods_id" placeholder="输入编号">
-        </div>
-        <div class="form-group">
-            <label for="name">名称</label>
-            <input type="text" class="form-control" id="name" placeholder="输入名称">
-        </div>
-        <div class="form-group">
-            <label for="price">单价</label>
-            <input type="number" class="form-control" id="price" placeholder="输入单价">
-        </div>
-        <div class="form-group">
-            <label for="number">数量</label>
-            <input type="number" class="form-control" id="number" placeholder="输入数量">
-        </div>
-
-    </form>
+                <form action="/modefyGood" method="post">
+                    <div class="form-group">
+                        <label for="goods_id">编号</label>
+                        <input type="number"  class="form-control" id="goods_id" placeholder="输入编号">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">名称</label>
+                        <input type="text" class="form-control" id="name" placeholder="输入名称">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">单价</label>
+                        <input type="number" class="form-control" id="price" placeholder="输入单价">
+                    </div>
+                    <div class="form-group">
+                        <label for="number">数量</label>
+                        <input type="number" class="form-control" id="number" placeholder="输入数量">
+                    </div>
+                </form>
+            </div>
+    </div>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary">确定</button>

@@ -83,17 +83,21 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th>1</th>
-                                <th>泡面</th>
-                                <th>4.5</th>
-                                <th>20</th>
+                            <tr th:each="goodManage :${goodManages}">
+                                <th th:text="${goodManage.goodsId}">1</th>
+                                <th th:text="${goodManage.goodsNums}">1001</th>
+                                <th th:text="${goodManage.goodsName}">泡面</th>
+                                <th th:text="${goodManage.goodsPrice}">4.5</th>
+                                <th th:text="${goodManage.goodsNumber}">20</th>
+<!--                             判断：当数量为0时，用户页面不显示
+                                <th th:if="${goodManage.goodsNumber}!=0">20</th>-->
                                 <td>
-                                    <form action="">
-                                        <button  type="submit"  class="btn btn-success">修改</button>
-                                        <button type="button" class="btn btn-danger">删除</button>
+                                    <form action="/getGoodId" method="post">
+                                        <button  type="submit" class="btn btn-success" th:value="${goodManage.goodsNums}" name="goodNum">修改</button>
                                     </form>
-
+                                    <form action="/banGood" method="post">
+                                        <button type="submit" class="btn btn-danger" th:value="${goodManage.goodsId}" name="id">删除</button>
+                                    </form>
                                 </td>
                             </tr>
 
@@ -115,7 +119,37 @@
     </div>
 </div>
 
+<script>
 
+    $(function() {
+
+        $("html, body").animate({scrollTop: $('#'+domid).offset().top - 80 }, {duration: 500,easing: "swing"});
+
+        return false;
+
+        $('#login-modal').on('show.bs.modal', function() {
+            console.log('显示对话框');
+        });
+        $('#login-modal').on('shown.bs.modal', function() {
+            console.log('对话框已经显示了');
+        });
+        $('#login-modal').on('hide.bs.modal', function() {
+            console.log('隐藏对话框');
+        });
+        $('#login-modal').on('hidden.bs.modal', function() {
+            console.log('隐藏了对话框');
+        });
+        $('#login-modal').on('loaded.bs.modal', function() {
+            console.log('已经加载好了对话框里面的内容');
+        });
+        $('#slideshow').on('slide.bs.carousel', function() {
+            console.log('播放幻灯片');
+        });
+        $('#slideshow').on('slid.bs.carousel', function() {
+            console.log('播放完成！');
+        });
+    });
+</script>
 
 
 </body>
