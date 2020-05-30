@@ -93,8 +93,8 @@
                                 <th th:if="${roomManage.status}==0">否</th>
                                 <th th:if="${roomManage.status}==1">是</th>
 
-                                <th th:text="${roomManage.inTime}">2020年5月10日</th>
-                                <th th:text="${roomManage.outTime}">2020年5月10日</th>
+                                <th th:text="${#dates.format(roomManage.inTime,'yyyy-MM-dd')}">2020年5月10日</th>
+                                <th th:text="${#dates.format(roomManage.inTime,'yyyy-MM-dd')}">2020年5月10日</th>
                                 <td>
                                     <form action="/getManageId" method="post">
                                         <button type="submit"  class="btn btn-success" th:value="${roomManage.id}" name="id">修改</button>
@@ -103,6 +103,9 @@
                                     <form action="/banRoom" method="post">
                                         <button type="submit" class="btn btn-danger" th:value="${roomManage.id}" name="id" th:if="${roomManage.status}==1">禁用</button>
                                         <button type="submit" class="btn btn-primary" th:value="${roomManage.id}" name="id" th:if="${roomManage.status}==0">启用</button>
+                                    </form>
+                                    <form action="/delectRoom" method="post">
+                                        <button type="submit" class="btn-danger btn" th:value="${roomManage.id}" name="id">删除</button>
                                     </form>
                                 </td>
                             </tr>

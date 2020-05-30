@@ -70,6 +70,7 @@ public class RoomManageController {
         roomManage.setUsername(username);
         roomManage.setCheckIn(Integer.valueOf(checkIn));
         roomManage.setStatus(Integer.valueOf(status));
+//        日期格式化
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
         Date inTime1 = sd.parse(inTime);
         roomManage.setInTime(inTime1);
@@ -82,4 +83,16 @@ public class RoomManageController {
         model.addAttribute("roomManages", roomManages);
         return "/admin/room_management";
     }
+    @PostMapping("/delectRoom")
+    public String delectRoom(HttpServletRequest request, Model model) {
+        String id = request.getParameter("id");
+        roomManageMapper.deleteByPrimaryKey(Integer.valueOf(id));
+
+        RoomManageExample roomManageExample = new RoomManageExample();
+        roomManageExample.createCriteria().andIdIsNotNull();
+        List<RoomManage> roomManages = roomManageMapper.selectByExample(roomManageExample);
+        model.addAttribute("roomManages", roomManages);
+        return "admin/room_management";
+    }
+
 }

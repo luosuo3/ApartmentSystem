@@ -94,8 +94,11 @@
                                 <th th:text="${bookRoom.outTime}"></th>
                                 <th th:text="${bookRoom.deposit}">100</th>
                                 <td>
-                                    <a href="" type="button" data-toggle="modal" data-target="#login-modal"
-                                       class="btn btn-success">修改</a>
+                                    <form action="/getReserId" method="post">
+                                        <button href="" type="submit"
+                                                class="btn btn-success" name="id" th:value="${bookRoom.id}">修改</button>
+                                    </form>
+
                                     <form action="" >
                                         <button type="button" class="btn btn-danger" th:value="${bookRoom.userName}">删除</button>
                                     </form>
@@ -120,36 +123,7 @@
     </div>
 </div>
 
-<script>
 
-    $(function() {
 
-        $("html, body").animate({scrollTop: $('#'+domid).offset().top - 80 }, {duration: 500,easing: "swing"});
-
-        return false;
-
-        $('#login-modal').on('show.bs.modal', function() {
-            console.log('显示对话框');
-        });
-        $('#login-modal').on('shown.bs.modal', function() {
-            console.log('对话框已经显示了');
-        });
-        $('#login-modal').on('hide.bs.modal', function() {
-            console.log('隐藏对话框');
-        });
-        $('#login-modal').on('hidden.bs.modal', function() {
-            console.log('隐藏了对话框');
-        });
-        $('#login-modal').on('loaded.bs.modal', function() {
-            console.log('已经加载好了对话框里面的内容');
-        });
-        $('#slideshow').on('slide.bs.carousel', function() {
-            console.log('播放幻灯片');
-        });
-        $('#slideshow').on('slid.bs.carousel', function() {
-            console.log('播放完成！');
-        });
-    });
-</script>
 </body>
 </html>
