@@ -29,7 +29,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="/roomManage">客房管理</a></li>
-                <li><a href="/goodsMange">商品管理</a></li>
+                <li><a href="/goodsManage">商品管理</a></li>
                 <li><a href="/reservation_management">预定管理</a></li>
                 <li class="dropdown">
                     <ul class="dropdown-menu">
@@ -84,7 +84,7 @@
                             </thead>
                             <tbody>
                             <tr th:each="goodManage :${goodManages}">
-                                <th th:text="${goodManage.goodsId}">1</th>
+<!--                                <th th:text="${goodManage.goodsId}">1</th>-->
                                 <th th:text="${goodManage.goodsNums}">1001</th>
                                 <th th:text="${goodManage.goodsName}">泡面</th>
                                 <th th:text="${goodManage.goodsPrice}">4.5</th>
@@ -93,9 +93,9 @@
                                 <th th:if="${goodManage.goodsNumber}!=0">20</th>-->
                                 <td>
                                     <form action="/getGoodId" method="post">
-                                        <button  type="submit" class="btn btn-success" th:value="${goodManage.goodsNums}" name="goodNum">修改</button>
+                                        <button  type="submit" class="btn btn-success" th:value="${goodManage.goodsId}" name="goodNum">修改</button>
                                     </form>
-                                    <form action="/banGood" method="post">
+                                    <form action="/delectGood" method="post">
                                         <button type="submit" class="btn btn-danger" th:value="${goodManage.goodsId}" name="id">删除</button>
                                     </form>
                                 </td>

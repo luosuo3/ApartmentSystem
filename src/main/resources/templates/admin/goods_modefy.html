@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>商品管理修改</title>
@@ -13,11 +13,56 @@
 <body>
 
 <!-- Modal -->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">公寓管理系统</a>
+        </div>
 
-<div class="modal-header">
-    <button class="close" data-dismiss="modal">&times;</button>
-    <h4>商品信息修改</h4>
-</div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="/roomManage">客房管理</a></li>
+                <li><a href="/goodsManage">商品管理</a></li>
+                <li><a href="/reservation_management">预定管理</a></li>
+                <li class="dropdown">
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">王峥 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+    <div class="modal-header">
+        <h4>客房信息修改</h4>
+    </div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-offset-2 col-xs-offset-2 col-lg-offset-2">
@@ -25,28 +70,29 @@
 
                 <form action="/modefyGood" method="post">
                     <div class="form-group">
-                        <label for="goods_id">编号</label>
-                        <input type="number"  class="form-control" id="goods_id" placeholder="输入编号">
+                        <label for="number">编号</label>
+                        <input type="number" th:value="${goodManage.goodsNums}" class="form-control" id="goods_id" placeholder="输入编号" name="goodsNums">
                     </div>
                     <div class="form-group">
                         <label for="name">名称</label>
-                        <input type="text" class="form-control" id="name" placeholder="输入名称">
+                        <input type="text" th:value="${goodManage.goodsName}" class="form-control" id="name" placeholder="输入名称" name="goodsName">
                     </div>
                     <div class="form-group">
                         <label for="price">单价</label>
-                        <input type="number" class="form-control" id="price" placeholder="输入单价">
+                        <input type="number" th:value="${goodManage.goodsPrice}" class="form-control" id="price" placeholder="输入单价" name="goodsPrice">
                     </div>
                     <div class="form-group">
                         <label for="number">数量</label>
-                        <input type="number" class="form-control" id="number" placeholder="输入数量">
+                        <input type="number" th:value="${goodManage.goodsNumber}" class="form-control" id="number" placeholder="输入数量" name="goodsNumber">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">确定</button>
                     </div>
                 </form>
             </div>
     </div>
 </div>
-<div class="modal-footer">
-    <button class="btn btn-primary">确定</button>
-</div>
 
+</div>
 </body>
 </html>

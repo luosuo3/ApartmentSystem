@@ -1,10 +1,10 @@
 package com.apartment.management.controller.admin;
 
 import com.apartment.management.mapper.GoodManageMapper;
-import com.apartment.management.model.BookRoom;
+
 import com.apartment.management.model.GoodManage;
 import com.apartment.management.model.GoodManageExample;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +21,7 @@ public class GoodsManageController {
     private int goodId;
     @Autowired
     GoodManageMapper goodManageMapper;
+
     @GetMapping("/goodsManage")
     public String goodsManage(Model model) {
         GoodManageExample goodManageExample = new GoodManageExample();
@@ -49,8 +50,8 @@ public class GoodsManageController {
 
     @PostMapping("/getGoodId")
     public String getGoodId(HttpServletRequest request, Model model){
-        String id = request.getParameter("id");
-        goodId=Integer.parseInt(id);
+        String id = request.getParameter("goodNum");
+        goodId = Integer.parseInt(id);
         GoodManage goodManage=goodManageMapper.selectByPrimaryKey(Integer.valueOf(id));
         model.addAttribute("goodManage",goodManage);
         return "admin/goods_modefy";
@@ -58,12 +59,33 @@ public class GoodsManageController {
 
     @PostMapping("/modefyGood")
     public String modefyGood(HttpServletRequest request, Model model,
-                             @RequestParam(name = "goodsId")int goodIds,
-                             @RequestParam(name = "goodsName")String goodNames,
-                             @RequestParam(name = "goodsPrice")int goodPrices,
-                             @RequestParam(name = "goodsNumber")int goodNumbers)throws ParseException {
+                             @RequestParam(name = "goodsNums")int goodsNums,
+                             @RequestParam(name = "goodsName")String goodsName,
+                             @RequestParam(name = "goodsPrice")float goodsPrice,
+                             @RequestParam(name = "goodsNumber")int goodsNumber)throws ParseException {
+        GoodManage goodManage = new GoodManage();
+        goodManage.setGoodsId(goodId);
+        goodManage.setGoodsNums(goodsNums);
+        goodManage.setGoodsName(goodsName);
+        goodManage.setGoodsPrice(goodsPrice);
+        goodManage.setGoodsNumber(goodsNumber);
 
+        goodManageMapper.updateByPrimaryKey(goodManage);
+        GoodManageExample goodManageExample=new GoodManageExample();
+        goodManageExample.createCriteria().andGoodsIdIsNotNull();
+        List<GoodManage>goodManages= goodManageMapper.selectByExample(goodManageExample);
+        model.addAttribute("goodManages",goodManages);
         return "/admin/goods_management";
     }
+    @PostMapping("/delectGood")
+    public String delectGood(HttpServletRequest request,Model model){
+        String id = request.getParameter("id");
+        goodManageMapper.deleteByPrimaryKey(Integer.valueOf(id));
 
+        GoodManageExample goodManageExample=new GoodManageExample();
+        goodManageExample.createCriteria().andGoodsIdIsNotNull();
+        List<GoodManage>goodManages= goodManageMapper.selectByExample(goodManageExample);
+        model.addAttribute("goodManages",goodManages);
+        return "admin/goods_management";
+    }
 }
