@@ -29,7 +29,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="/roomManage">客房管理</a></li>
-                <li><a href="/goodsMange">商品管理</a></li>
+                <li><a href="/goodsManage">商品管理</a></li>
                 <li><a href="/reservation_management">预定管理</a></li>
                 <li class="dropdown">
                     <ul class="dropdown-menu">
@@ -68,7 +68,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <a href="#" class="list-group-item active">
-                            <div style="text-align: center;"><strong>客房管理</strong></div>
+                            <center><strong>客房管理</strong></center>
                         </a>
                     </div>
                     <div class="panel-body">
@@ -93,8 +93,8 @@
                                 <th th:if="${roomManage.status}==0">否</th>
                                 <th th:if="${roomManage.status}==1">是</th>
 
-                                <th th:text="${#dates.format(roomManage.inTime,'yyyy-MM-dd')}">2020年5月10日</th>
-                                <th th:text="${#dates.format(roomManage.inTime,'yyyy-MM-dd')}">2020年5月10日</th>
+                                <th th:text="${roomManage.inTime}">2020年5月10日</th>
+                                <th th:text="${roomManage.outTime}">2020年5月10日</th>
                                 <td>
                                     <form action="/getManageId" method="post">
                                         <button type="submit"  class="btn btn-success" th:value="${roomManage.id}" name="id">修改</button>
@@ -128,7 +128,37 @@
     </div>
 </div>
 
+<script>
 
+    $(function() {
+
+        $("html, body").animate({scrollTop: $('#'+domid).offset().top - 80 }, {duration: 500,easing: "swing"});
+
+        return false;
+
+        $('#login-modal').on('show.bs.modal', function() {
+            console.log('显示对话框');
+        });
+        $('#login-modal').on('shown.bs.modal', function() {
+            console.log('对话框已经显示了');
+        });
+        $('#login-modal').on('hide.bs.modal', function() {
+            console.log('隐藏对话框');
+        });
+        $('#login-modal').on('hidden.bs.modal', function() {
+            console.log('隐藏了对话框');
+        });
+        $('#login-modal').on('loaded.bs.modal', function() {
+            console.log('已经加载好了对话框里面的内容');
+        });
+        $('#slideshow').on('slide.bs.carousel', function() {
+            console.log('播放幻灯片');
+        });
+        $('#slideshow').on('slid.bs.carousel', function() {
+            console.log('播放完成！');
+        });
+    });
+</script>
 
 </body>
 </html>
