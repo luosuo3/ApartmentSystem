@@ -37,7 +37,7 @@ public class IndexController {
             }
         } else if (users.get(0).getType()==1) {
 
-            if (users.get(0).getUserName().equals(username) || users.get(0).getPassword().equals(password)) {
+            if (users.get(0).getUserName().equals(username) && users.get(0).getPassword().equals(password)) {
                 RoomManageExample roomManageExample = new RoomManageExample();
                 roomManageExample.createCriteria().andIdIsNotNull();
                 List<RoomManage> roomManages = roomManageMapper.selectByExample(roomManageExample);

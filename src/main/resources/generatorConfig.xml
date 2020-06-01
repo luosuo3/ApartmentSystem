@@ -37,5 +37,6 @@
 <!--        <table tableName="book_room" domainObjectName="BookRoom"/>-->
 <!--             <table tableName="room_manage" domainObjectName="RoomManage"/>-->
         <table tableName="good_manage" domainObjectName="GoodManage"/>
+
     </context>
 </generatorConfiguration>
