@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.util.List;
 
 @Controller
+
 public class GoodsManageController {
     private int goodId;
     @Autowired

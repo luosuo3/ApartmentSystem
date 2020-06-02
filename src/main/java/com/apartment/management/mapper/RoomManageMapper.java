@@ -103,4 +103,11 @@ public interface RoomManageMapper {
      */
     int updateByPrimaryKey(RoomManage record);
 
+
+    /**
+     * @return All room_nums
+     * @author 王峥
+     * @date 2020/6/2 12:05 上午
+     */
+    List<Integer> findAllRoomNums();
 }

@@ -29,7 +29,7 @@ public class RoomManageController {
         RoomManageExample roomManageExample = new RoomManageExample();
         roomManageExample.createCriteria().andIdIsNotNull();
         List<RoomManage> roomManages = roomManageMapper.selectByExample(roomManageExample);
-        model.addAttribute("roomManages", roomManages);
+     model.addAttribute("roomManages", roomManages);
         return "/admin/room_management";
     }
 

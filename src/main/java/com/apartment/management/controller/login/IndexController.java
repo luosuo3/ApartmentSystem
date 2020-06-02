@@ -30,7 +30,9 @@ public class IndexController {
         userExample.createCriteria().andUserNameEqualTo(username);
         List<User> users = userMapper.selectByExample(userExample);
         if (users.get(0).getType()==0) {
-            if (users.get(0).getUserName().equals(username)||users.get(0).getPassword().equals(password)) {
+            if (users.get(0).getUserName().equals(username) && users.get(0).getPassword().equals(password)) {
+                List<Integer> room_nums = roomManageMapper.findAllRoomNums();
+                model.addAttribute("roomNums", room_nums);
                 return "/user/room_book";
             } else {
                 return "/index";

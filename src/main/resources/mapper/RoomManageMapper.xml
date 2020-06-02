@@ -334,4 +334,11 @@
       order by ${orderByClause}
     </if>
   </select>
+
+  <select id="findAllRoomNums" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+           room_nums
+        FROM
+           room_manage
+    </select>
 </mapper>

@@ -50,8 +50,9 @@
         </div>
         <p>入住房间</p>
         <select class="form-control" name="room">
-            <option value="1">1</option>
-            <option value="2">2</option>
+            <div  th:each="roomNum:${roomNums}">
+                <option th:text="${roomNum}" th:value="${roomNum}">1</option>
+            </div>
         </select>
         <div class="form-group ">
             <label>房间预定日期</label>
@@ -80,7 +81,7 @@
             <option value="200">200</option>
         </select>
 
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-default">预定</button>
      </form>
 </div>
 <script>

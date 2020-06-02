@@ -56,8 +56,9 @@
                                     <form action="/delectReser" method="post" >
                                         <button type="submit" class="btn btn-danger" th:value="${bookRoom.id}" name="id">删除</button>
                                     </form>
-
-                                    <button type="button" class="btn  btn-primary">确认</button>
+                                    <form action="/define" method="post">
+                                        <button type="submit" class="btn  btn-primary" th:value="${bookRoom.id}" name="id">确认</button>
+                                    </form>
                                 </td>
                             </tr>
 

@@ -1,9 +1,11 @@
 package com.apartment.management.controller.user;
 
 import com.apartment.management.mapper.BookRoomMapper;
+import com.apartment.management.mapper.RoomManageMapper;
 import com.apartment.management.model.BookRoom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,14 +14,18 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class RoomController {
     @Autowired
     BookRoomMapper bookRoomMapper;
-    @GetMapping("/roombook")
-    public String roomBook() {
-
+    @Autowired
+    RoomManageMapper roomManageMapper;
+    @GetMapping("roombook")
+    public String roomBook(Model model) {
+        List<Integer> room_nums = roomManageMapper.findAllRoomNums();
+        model.addAttribute("roomNums", room_nums);
         return "/user/room_book";
     }
 
