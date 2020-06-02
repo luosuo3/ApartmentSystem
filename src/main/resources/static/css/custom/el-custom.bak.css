@@ -1,0 +1,94 @@
+html,body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    /* html默认高度只有一行, 因此需要显式声明高度*/
+}
+.mx-body-container{
+    width: 1190px;
+    margin: 0 auto;
+    height: 100vh;
+    border-right: 1px solid #eee;
+}
+/*左侧菜单样式*/
+.mx-aside{
+    width: 200px;
+    border: 0;
+    margin: 0;
+    background-color: rgb(48, 65, 86);
+}
+/*=============================*/
+.mx-nav{
+    background-color: rgb(48, 65, 86);
+}
+/*=============================*/
+.mx-submenu{
+    background-color: rgb(48, 65, 86);
+}
+.mx-submenu .is-opened{
+    background-color: rgb(31, 45, 61);
+}
+.mx-submenu :hover{
+    background-color: rgb(0, 0, 0);
+}
+.mx-submenu .is-active{
+    background-color: rgb(0, 0, 0);
+}
+/*=============================*/
+.mx-menu-item{
+    background-color: rgb(31, 45, 61);
+    color: rgb(191, 203, 217);
+}
+.mx-menu-item :hover{
+    background-color: rgb(0, 0, 0);
+}
+/*=============================*/
+.mx-submenu__title{
+    color: rgb(191, 203, 217);
+}
+.mx-logo{
+    width: 200px;
+    line-height: 50px;/*设置div内容高度*/
+    font-size: 20px;
+    text-align: center;
+    color: rgb(191, 203, 217);
+}
+/*=============================*/
+/*左侧菜单样式结束*/
+/*页头样式*/
+.mx-header{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 50vh;
+    line-height: 50px;/*设置div内容高度*/
+    background: #ffffff;
+    color: #333;
+    text-align: right;
+    font-size: 12px;
+}
+/*页头样式结束*/
+.mx-horizontal-split{
+    height: 3px ;
+    border: 0;
+    margin: 0px;
+    padding: 0;
+    background-color: #f7f7f7;
+}
+.mx-main-container{
+    width: 100%;
+    margin: 0;
+}
+.mx-footer {
+    background: rgb(255, 255, 255);
+    color: #333;
+    line-height: 50px;/*设置div内容高度*/
+    text-align: center;
+    font-size: 12px;
+}
+
+
+
+
+
+

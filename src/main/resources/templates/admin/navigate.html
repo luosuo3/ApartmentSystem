@@ -24,24 +24,16 @@
                 <li><a href="/roomManage">客房管理</a></li>
                 <li><a href="/goodsManage">商品管理</a></li>
                 <li><a href="/reservation_management">预定管理</a></li>
-                <li class="dropdown">
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
-                </li>
+                <li><a href="/message_management">留言管理</a></li>
+
+
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">王峥 <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.user.getUserName()}">王峥 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">退出登录</a></li>
+                        <li><a href="/logout">退出登录</a></li>
                     </ul>
                 </li>
             </ul>

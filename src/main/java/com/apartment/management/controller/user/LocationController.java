@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class LocationController {
     @GetMapping("/location")
     public String location() {
-
         return "/user/apartment_location";
     }
 }

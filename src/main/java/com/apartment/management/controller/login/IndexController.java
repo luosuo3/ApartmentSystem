@@ -8,8 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -24,11 +27,12 @@ public class IndexController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam(name = "username",required = false)  String username, @RequestParam(name = "password",required = false) String password, Model model){
+    public String login(@RequestParam(name = "username",required = false)  String username, @RequestParam(name = "password",required = false) String password, Model model, HttpServletRequest request){
 
         UserExample userExample = new UserExample();
         userExample.createCriteria().andUserNameEqualTo(username);
         List<User> users = userMapper.selectByExample(userExample);
+        request.getSession().setAttribute("user",users.get(0));
         if (users.get(0).getType()==0) {
             if (users.get(0).getUserName().equals(username) && users.get(0).getPassword().equals(password)) {
                 List<Integer> room_nums = roomManageMapper.findAllRoomNums();
@@ -51,4 +55,12 @@ public class IndexController {
         }
         return "/index";
     }
+    @RequestMapping("/logout")
+    public String logout(HttpSession session){
+        // 清除Session
+        session.invalidate();
+        // 重定向到登录页面的跳转方法
+        return "redirect:index";
+    }
+
 }

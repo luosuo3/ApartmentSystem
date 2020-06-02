@@ -1,0 +1,47 @@
+html,body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    /* html默认高度只有一行, 因此需要显式声明高度*/
+}
+.mx-container{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.mx-main-content{
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 20px 10px;
+}
+
+.mx-table-title{
+    box-sizing: border-box;
+    width: 100%;
+    height: 30px;
+    margin: 0;
+    padding-left: 15px;
+    font-size: larger;
+    color: #909399;
+    text-align: left;
+}
+.el-divider{
+    margin: 24px 0px;
+}
+.mx-table-content{
+    width: 100%;
+    height: calc(100% - (30px + 48px));
+    margin: 0;
+    padding: 0;
+}
+
+
+
+
+
+
+

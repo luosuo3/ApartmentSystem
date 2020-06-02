@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>用户管理</title>
+  <!--2 引入element css库-->
+  <link rel="stylesheet"
+        href="../static/css/index.css">
+  <link rel="stylesheet"
+        href="../static/css/custom/el-custom.css">
+</head>
+<body>
+<div id="app" class="mx-container">
+  <div class="mx-main-content">
+    <div class="mx-table-title">
+      用户列表 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <el-button
+          type="primary" size="mini"
+          @click="onAdd()">
+        注册用户
+      </el-button>
+    </div>
+    <div class="el-divider">
+      <el-divider></el-divider>
+    </div>
+    <div class="mx-table-content">
+      <el-table
+          :data="tableData"
+          :stripe="true"
+          style="width: 100%">
+        <el-table-column
+          type="index"
+          label=""
+          width="50">
+        </el-table-column>
+        <el-table-column
+          prop="userLoginId"
+          label="账号"
+          width="150">
+        </el-table-column>
+        <el-table-column
+            prop="userName"
+            label="姓名"
+            width="150">
+        </el-table-column>
+        <el-table-column
+            prop="email"
+            label="邮箱"
+            width="150">
+        </el-table-column>
+        <el-table-column
+            prop="mobile"
+            label="电话"
+            align="center"
+            width="150">
+        </el-table-column>
+        <el-table-column
+            prop="userType"
+            label="用户类型"
+            align="center"
+            width="150">
+          <template slot-scope="scope">
+            <span v-if="scope.row.userType == '0'">系统管理员</span>
+            <span v-if="scope.row.userType == '1'">学生</span>
+            <span v-if="scope.row.userType == '2'">老师</span>
+            <span v-if="scope.row.userType == '4'">教工</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+            prop="currentStatus"
+            label="状态"
+            align="center"
+            width="150">
+          <template slot-scope="scope">
+            <span v-if="scope.row.currentStatus == '0'">正常</span>
+            <span v-if="scope.row.currentStatus == '1'">禁用</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+            prop=""
+            label="操作"
+            align="center"
+            width="300">
+          <template slot-scope="scope">
+            <el-button
+                type="primary"
+                size="mini" plain
+                @click="onEdit(scope.$index)">
+              修改
+            </el-button>
+            <el-button
+                type="danger"
+                size="mini" plain
+                @click="onDelete(scope.$index)">
+              删除
+            </el-button>
+            <el-button type="info"
+                       size="mini" plain
+                       @click="onResetPwd(scope.$index)">
+              重置密码
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+  </div>
+  <!--注册用户对话框-->
+  <el-dialog
+      :title="dialog.title"
+      :visible.sync="dialog.visible"
+      :modal-append-to-body="false"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      width="60%">
+    <!--注册表单-->
+    <el-form :model="mymodel" label-width="150px">
+      <el-form-item label="登录账号：" required>
+        <el-col :span="15">
+          <el-input v-model="mymodel.userLoginId"></el-input>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="登录密码：" required>
+        <el-col :span="15">
+          <el-input type="password" v-model="mymodel.currentPassword"></el-input>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="重复密码：" required>
+        <el-col :span="15">
+          <el-input type="password" v-model="mymodel.currentPassword2"></el-input>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="用户类型：">
+        <!--使用label表示值-->
+        <el-radio-group v-model="mymodel.userType" size="mini">
+          <el-radio-button label="0">系统管理员</el-radio-button>
+          <el-radio-button label="1">学生</el-radio-button>
+          <el-radio-button label="2">老师</el-radio-button>
+          <el-radio-button label="4">教工</el-radio-button>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="姓名：">
+        <el-col :span="15">
+          <el-input v-model="mymodel.userName"></el-input>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="邮箱">
+        <el-col :span="15">
+          <el-input v-model="mymodel.email"></el-input>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="电话">
+        <el-col :span="15">
+          <el-input v-model="mymodel.mobile"></el-input>
+        </el-col>
+      </el-form-item>
+
+      <el-form-item>
+        <el-button type="primary" size="mini" @click="onSubmitAdd()">保存</el-button>
+        <el-button size="mini" @click="dialog.visible=false">取消</el-button>
+      </el-form-item>
+
+    </el-form>
+
+  </el-dialog>
+
+  <!--修改用户信息对话框-->
+  <el-dialog
+      :title="dialogEdit.title"
+      :visible.sync="dialogEdit.visible"
+      :modal-append-to-body="false"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      width="60%">
+    <el-form :model="mymodel" label-width="150px">
+      <el-form-item hidden>
+        <el-input v-model="mymodel.userId"></el-input>
+      </el-form-item>
+      <el-form-item label="登录账号：">
+        <el-col :span="15">
+          <el-input readonly v-model="mymodel.userLoginId"></el-input>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="用户类型：">
+        <!--使用label表示值-->
+        <el-radio-group v-model="mymodel.userType" size="mini">
+          <el-radio-button label="0">系统管理员</el-radio-button>
+          <el-radio-button label="1">学生</el-radio-button>
+          <el-radio-button label="2">老师</el-radio-button>
+          <el-radio-button label="4">教工</el-radio-button>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="姓名：">
+        <el-col :span="15">
+          <el-input v-model="mymodel.userName"></el-input>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="邮箱">
+        <el-col :span="15">
+          <el-input v-model="mymodel.email"></el-input>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="电话">
+        <el-col :span="15">
+          <el-input v-model="mymodel.mobile"></el-input>
+        </el-col>
+      </el-form-item>
+
+      <el-form-item>
+        <el-button type="primary" size="mini" @click="onSubmitEdit()">保存</el-button>
+        <el-button size="mini" @click="dialogEdit.visible=false">取消</el-button>
+      </el-form-item>
+
+    </el-form>
+
+  </el-dialog>
+
+  <!--重置密码对话框-->
+</div>
+<!--1 引入vue-->
+<script src="../static/js/vue/vue.js"></script>
+<!--2 引入element js-->
+<script src="../static/js/index.js"></script>
+<!--3 引入axios js-->
+<script src="../static/js/axios/axios.min.js"></script>
+<!--4 引入配置js-->
+<script src="../static/js/mx-config.js"></script>
+
+<script>
+  var app = new Vue({
+    el:"#app",
+    data:function () {
+      return{
+        tableData:[],
+        dialog:{
+          title:'',
+          visible:false
+        },
+        //控制修改对话框
+        dialogEdit:{
+          title:'',
+          visible:false
+        },
+
+        mymodel:{
+          userId:'',
+          userLoginId:'',
+          currentPassword:'',
+          currentPassword2:'',
+          userName:'',
+          email:'',
+          mobile:'',
+          userType:'1',
+          currentStatus:'0'
+        },
+        //定义一个临时变量，保存选中了哪一行数据
+        selectedIndex:-1
+      }
+    },
+
+    //生命周期钩子
+    mounted:function(){
+      //初始化表格
+      this.initTable();
+    },
+
+    methods:{
+      //初始化表格：从后台获得数据
+      initTable:function(){
+        axios.get("/admin/users").then(res => {
+          this.tableData = res.data;
+        })
+      },
+
+      //响应添加按钮
+      onAdd:function () {
+        //清空表单
+        this.mymodel = {
+          userId:'',
+          userLoginId:'',
+          currentPassword:'',
+          currentPassword2:'',
+          userName:'',
+          email:'',
+          mobile:'',
+          userType:'1',
+          currentStatus:'0'
+        };
+
+        this.dialog.title = '注册用户';
+        this.dialog.visible = true;
+      },
+      //响应注册用户对话框 保存 按钮
+      onSubmitAdd:function () {
+        //通过axios的post方法，把表单数据提交给后台
+        //语法是es6
+        axios.post("/admin/users/",this.mymodel).then(res => {
+          //1 各一个提示信息
+          this.$message({
+            message:'保存成功！',
+            type:'success'
+          });
+          //2 更新 表格
+          //方法一：
+          this.tableData.push(res.data);
+          //方法二:
+          //this.tableData.splice(this.tableData.length,0,res.data);
+          //方法三：直接查询数据库，更新表格
+
+          //3 关闭对话框
+          this.dialog.visible = false;
+        })
+      },
+
+      //响应修改按钮
+      onEdit:function (index) {
+        //把整个索引存到一个临时变量
+        this.selectedIndex = index;
+        //回填数据
+        this.mymodel = {
+          userId:this.tableData[index].userId,
+          userLoginId:this.tableData[index].userLoginId,
+          userName:this.tableData[index].userName,
+          email:this.tableData[index].email,
+          mobile:this.tableData[index].mobile,
+          userType:this.tableData[index].userType,
+          currentStatus:this.tableData[index].currentStatus
+        };
+
+        //显示对话框
+        this.dialogEdit.title = '修改用户基本信息';
+        this.dialogEdit.visible = true;
+      },
+      //响应修改 保存 按钮
+      onSubmitEdit:function () {
+        //通过axios的put方法，把表单数据提交给后台
+        axios.put("/admin/users",this.mymodel).then(res =>{
+          this.$message({
+            message:'保存成功！',
+            type:'success'
+          });
+
+          this.tableData.splice(this.selectedIndex,1,res.data);
+
+          this.dialogEdit.visible = false;
+
+        })
+      },
+
+      //响应删除按钮
+      onDelete:function (index) {
+        //确认提示
+        this.$confirm("确认删除该数据吗？","提示",{
+          confirmButtonText:'确定',
+          cancelButtonText:'取消',
+          type:'warning'
+        }).then(() => {
+          //删除
+          axios.delete("/admin/users/"+this.tableData[index].userId).then(res =>{
+            if(res.data == '200'){
+              this.$message("删除成功！");
+              this.tableData.splice(index,1);
+            }
+          })
+        });
+
+      },
+    //  响应重置密码
+      onReset:function (index) {
+        {
+          //确认提示
+          this.$confirm("确认要删除密码吗？","提示",{
+            confirmButtonText:'确定',
+            cancelButtonText:'取消',
+            type:'warning'
+          }).then(() => {
+            //重置
+            axios.delete("/admin/reset/"+this.tableData[index].userId).then(res =>{
+              if(res.data == '200'){
+                this.$message("重置成功！");
+                this.tableData.splice(index,1);
+              }
+            })
+          });
+
+        }
+      }
+
+    }
+
+  });
+</script>
+</body>
+</html>

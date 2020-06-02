@@ -1,0 +1,80 @@
+html,body {
+    font-size: 14px;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+/*页面背景*/
+.body-main{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background: url(images/bg.jpg) no-repeat #000;
+    opacity: 0.85;/*透明度*/
+    background-size: 100% 100%;
+    min-width:1190px;
+    min-height:800px;
+}
+/*登录窗口*/
+.login-main {
+    width: 306px;
+    background: #fff;
+    padding: 50px 80px;
+    position: relative;
+    top: 160px;
+    left: 50%;
+    margin: 0 0 0 -233px;
+    z-index: 2
+}
+/*登录框 各种样式*/
+/*标题*/
+.login-main h1 {
+    font-size: 26px;
+    color: #555;
+    text-align: center;
+    width: 128px;
+    padding-top: 28px;
+    margin: 0 auto 25px
+}
+/*输入框*/
+.login-main input {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    width: 280px;
+    border: 1px solid #cecece;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    padding: 12px;
+    margin: 9px 0
+}
+.login-main button:focus, input:focus {
+    outline: 0
+}
+
+.login-main input[type=submit] {
+    border: 0;
+    height: 46px;
+    width: 100%;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    background: rgb(0, 150, 136);
+    -webkit-border-radius: 23px;
+    -moz-border-radius: 23px;
+    border-radius: 23px;
+    margin: 18px 0
+}
+
+.login-main .errormsg {
+    font-size: 14px;
+    text-align: center;
+    color: #ff3805;
+
+}
