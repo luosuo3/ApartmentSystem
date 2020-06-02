@@ -57,21 +57,16 @@
         <div class="form-group ">
             <label>房间预定日期</label>
             <div class="myrow">
-
-                <div class='input-group date' style="width: 14em;" id='datetimepicker1'>
-                    <input type='text' class="timeInput form-control" name="inTime" />
-                    <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-					</span>
+                <div class="form-group">
+                    <label for="data1">入住日期</label>
+                    <input type="date"   name="inTime" class="form-control" id="data1" placeholder="输入入住日期">
                 </div>
-                <div class="xxxx">
+                <div class="xxxx" style="margin-top: 40px;">
 
                 </div>
-                <div class='input-group date' style="width: 14em;" id='datetimepicker2'>
-                    <input type='text' class="timeInput form-control"  name="outTime"/>
-                    <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-					</span>
+                <div class="form-group">
+                    <label for="data2">离开日期</label>
+                    <input type="date" class="form-control"  name="outTime" id="data2" placeholder="输入入住日期">
                 </div>
             </div>
         </div>
@@ -84,38 +79,7 @@
         <button type="submit" class="btn btn-default">预定</button>
      </form>
 </div>
-<script>
-    $(function() {
-        $('#form1').hide();
-        var picker1 = $('#datetimepicker1').datetimepicker({
-            format: 'YYYY-MM-DD',
-            locale: moment.locale('zh-cn'),
-            //minDate: '2016-7-1'
-        });
-        var picker2 = $('#datetimepicker2').datetimepicker({
-            format: 'YYYY-MM-DD',
-            locale: moment.locale('zh-cn')
-        });
-        //动态设置最小值
-        picker1.on('dp.change', function(e) {
-            picker2.data('DateTimePicker').minDate(e.date);
-        });
-        //动态设置最大值
-        picker2.on('dp.change', function(e) {
-            picker1.data('DateTimePicker').maxDate(e.date);
-        });
-    });
-    $('#datetimepicker1').datetimepicker({
-        format: 'YYYY-MM-DD',
-        locale: moment.locale('zh-cn'),
-        defaultDate: "2020-5-10"
-    });
-    $('#datetimepicker2').datetimepicker({
-        format: 'YYYY-MM-DD',
-        locale: moment.locale('zh-cn'),
-        defaultDate: "2020-12-30"
-    });
-</script>
+
 
 </body>
 </html>

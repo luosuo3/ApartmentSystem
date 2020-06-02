@@ -340,5 +340,7 @@
            room_nums
         FROM
            room_manage
+        WHERE
+           check_in=0
     </select>
 </mapper>

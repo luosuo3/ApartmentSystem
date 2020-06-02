@@ -29,7 +29,7 @@ public class RoomManageController {
         RoomManageExample roomManageExample = new RoomManageExample();
         roomManageExample.createCriteria().andIdIsNotNull();
         List<RoomManage> roomManages = roomManageMapper.selectByExample(roomManageExample);
-     model.addAttribute("roomManages", roomManages);
+        model.addAttribute("roomManages", roomManages);
         return "/admin/room_management";
     }
 
@@ -61,11 +61,11 @@ public class RoomManageController {
     }
 
     @PostMapping("/modefyRoom")
-    public String modefyRoom(HttpServletRequest request,Model model,
-                             @RequestParam(name = "roomNums" )int roomNums,
-                             @RequestParam(name = "username")String username,
-                             @RequestParam(name = "inTime")String inTime,
-                             @RequestParam(name = "outTime")String outTime) throws ParseException {
+    public String modefyRoom(HttpServletRequest request, Model model,
+                             @RequestParam(name = "roomNums") int roomNums,
+                             @RequestParam(name = "username") String username,
+                             @RequestParam(name = "inTime") String inTime,
+                             @RequestParam(name = "outTime") String outTime) throws ParseException {
         String checkIn = request.getParameter("checkIn");
         String status = request.getParameter("status");
         RoomManage roomManage = new RoomManage();
@@ -78,7 +78,7 @@ public class RoomManageController {
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
         Date inTime1 = sd.parse(inTime);
         roomManage.setInTime(inTime1);
-        Date outTime1=sd.parse(outTime);
+        Date outTime1 = sd.parse(outTime);
         roomManage.setOutTime(outTime1);
         roomManageMapper.updateByPrimaryKey(roomManage);
         RoomManageExample roomManageExample = new RoomManageExample();
@@ -87,6 +87,7 @@ public class RoomManageController {
         model.addAttribute("roomManages", roomManages);
         return "/admin/room_management";
     }
+
     @PostMapping("/delectRoom")
     public String delectRoom(HttpServletRequest request, Model model) {
         String id = request.getParameter("id");
@@ -99,4 +100,17 @@ public class RoomManageController {
         return "admin/room_management";
     }
 
+    @PostMapping("/roomAdd")
+    public String addRoom(Model model,HttpServletRequest request,@RequestParam(name = "roomNum") int roomNum ) {
+        String status = request.getParameter("status");
+        RoomManage roomManage = new RoomManage();
+        roomManage.setStatus(Integer.valueOf(status));
+        roomManage.setRoomNums(roomNum);
+        roomManageMapper.insertSelective(roomManage);
+        RoomManageExample roomManageExample = new RoomManageExample();
+        roomManageExample.createCriteria().andIdIsNotNull();
+        List<RoomManage> roomManages = roomManageMapper.selectByExample(roomManageExample);
+        model.addAttribute("roomManages", roomManages);
+        return "admin/room_management";
+    }
 }

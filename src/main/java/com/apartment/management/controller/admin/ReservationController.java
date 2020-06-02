@@ -8,6 +8,7 @@ import com.apartment.management.model.RoomManage;
 import com.apartment.management.model.RoomManageExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,6 +85,7 @@ public class ReservationController {
         return "admin/reservation_management";
     }
 
+    @Transactional
     @PostMapping("/define")
     public  String define(HttpServletRequest request,Model model) {
         int id = Integer.parseInt(request.getParameter("id"));
