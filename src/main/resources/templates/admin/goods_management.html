@@ -20,7 +20,7 @@
             <div class="col-sm-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a href="#" class="list-group-item active">
+                        <a href="" class="list-group-item active"  type="button" data-toggle="modal" data-target="#login-modal">
                             <center><strong>商品管理</strong></center>
                         </a>
                     </div>
@@ -37,13 +37,12 @@
                             </thead>
                             <tbody>
                             <tr th:each="goodManage :${goodManages}">
-<!--                                <th th:text="${goodManage.goodsId}">1</th>-->
                                 <th th:text="${goodManage.goodsNums}">1001</th>
                                 <th th:text="${goodManage.goodsName}">泡面</th>
                                 <th th:text="${goodManage.goodsPrice}">4.5</th>
                                 <th th:text="${goodManage.goodsNumber}">20</th>
-<!--                             判断：当数量为0时，用户页面不显示
-                                <th th:if="${goodManage.goodsNumber}!=0">20</th>-->
+                                <!--                             判断：当数量为0时，用户页面不显示
+                                                                <th th:if="${goodManage.goodsNumber}!=0">20</th>-->
                                 <td>
                                     <form action="/getGoodId" method="post">
                                         <button  type="submit" class="btn btn-success" th:value="${goodManage.goodsId}" name="goodNum">修改</button>
@@ -67,6 +66,43 @@
 <div class="modal fade" id="login-modal" tabindex="-1" data-remote="goods_modefy.html">
     <div class="modal-dialog">
         <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">&times;</button>
+                <h4>商品信息添加</h4>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-offset-2 col-xs-offset-2 col-lg-offset-2">
+                        <div class="modal-body">
+
+                            <form action="/addGood" method="post">
+                                <div class="form-group">
+                                    <label >编号</label>
+                                    <input type="number" class="form-control" id="goods_id" placeholder="输入编号"  name="goodsNums">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">名称</label>
+                                    <input type="text" class="form-control" id="name" placeholder="输入名称" name="goodsName">
+                                </div>
+                                                            <div class="form-group">
+                                                                <label for="price">单价</label>
+                                                                <input type="number" class="form-control" id="price" placeholder="输入单价" name="goodsPrice">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="number">数量</label>
+                                                                <input type="number" class="form-control" id="number" placeholder="输入数量" name="goodsNumber">
+                                                            </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">确定</button>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
 
         </div>
     </div>
@@ -76,30 +112,10 @@
 
     $(function() {
 
-        $("html, body").animate({scrollTop: $('#'+domid).offset().top - 80 }, {duration: 500,easing: "swing"});
-
-        return false;
-
-        $('#login-modal').on('show.bs.modal', function() {
-            console.log('显示对话框');
-        });
-        $('#login-modal').on('shown.bs.modal', function() {
-            console.log('对话框已经显示了');
-        });
-        $('#login-modal').on('hide.bs.modal', function() {
-            console.log('隐藏对话框');
-        });
-        $('#login-modal').on('hidden.bs.modal', function() {
-            console.log('隐藏了对话框');
-        });
-        $('#login-modal').on('loaded.bs.modal', function() {
-            console.log('已经加载好了对话框里面的内容');
-        });
-        $('#slideshow').on('slide.bs.carousel', function() {
-            console.log('播放幻灯片');
-        });
-        $('#slideshow').on('slid.bs.carousel', function() {
-            console.log('播放完成！');
+        $('#login-modal').modal({
+            show: false,
+            backdrop: false,
+            remote: 'XiuGai.html'
         });
     });
 </script>

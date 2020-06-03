@@ -17,7 +17,6 @@ import java.text.ParseException;
 import java.util.List;
 
 @Controller
-
 public class GoodsManageController {
     private int goodId;
     @Autowired
@@ -82,6 +81,26 @@ public class GoodsManageController {
     public String delectGood(HttpServletRequest request,Model model){
         String id = request.getParameter("id");
         goodManageMapper.deleteByPrimaryKey(Integer.valueOf(id));
+
+        GoodManageExample goodManageExample=new GoodManageExample();
+        goodManageExample.createCriteria().andGoodsIdIsNotNull();
+        List<GoodManage>goodManages= goodManageMapper.selectByExample(goodManageExample);
+        model.addAttribute("goodManages",goodManages);
+        return "admin/goods_management";
+    }
+    @PostMapping("/addGood")
+    public String addGood(HttpServletRequest request,Model model,
+                          @RequestParam(name = "goodsNums")int goodsNums,
+                          @RequestParam(name = "goodsName")String goodsName){
+        String goodsPrice = request.getParameter("goodsPrice");
+        String goodsNumber = request.getParameter("goodsNumber");
+        GoodManage goodManage = new GoodManage();
+        goodManage.setGoodsId(goodId);
+        goodManage.setGoodsNums(goodsNums);
+        goodManage.setGoodsName(goodsName);
+        goodManage.setGoodsPrice(Float.valueOf(goodsPrice));
+        goodManage.setGoodsNumber(Integer.valueOf(goodsNumber));
+        goodManageMapper.insertSelective(goodManage);
 
         GoodManageExample goodManageExample=new GoodManageExample();
         goodManageExample.createCriteria().andGoodsIdIsNotNull();
