@@ -91,7 +91,9 @@ public class GoodsManageController {
     @PostMapping("/addGood")
     public String addGood(HttpServletRequest request,Model model,
                           @RequestParam(name = "goodsNums")int goodsNums,
-                          @RequestParam(name = "goodsName")String goodsName){
+                          @RequestParam(name = "goodsName")String goodsName,
+                          @RequestParam(name = "goodsPrice")float goodsPrice,
+                          @RequestParam(name = "goodsNumber")int goodsNumber){
 //        String goodsName = request.getParameter("goodsName");
 //        goodId = Integer.parseInt(goodsName);
 
@@ -99,6 +101,8 @@ public class GoodsManageController {
         goodManage.setGoodsId(goodId);
         goodManage.setGoodsNums(goodsNums);
         goodManage.setGoodsName(goodsName);
+        goodManage.setGoodsPrice(goodsPrice);
+        goodManage.setGoodsNumber(goodsNumber);
         goodManageMapper.insertSelective(goodManage);
 
         GoodManageExample goodManageExample=new GoodManageExample();
