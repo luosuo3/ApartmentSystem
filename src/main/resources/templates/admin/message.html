@@ -78,7 +78,7 @@
                         </el-button>
                         <el-button type="info"
                                    size="mini" plain
-                                   @click="onResetPwd(scope.$index)">
+                                   @click="onReset(scope.$index)">
                             一键屏蔽
                         </el-button>
                     </template>
@@ -251,7 +251,7 @@
                     type:'warning'
                 }).then(() => {
                     //删除
-                    axios.delete("/admin/users/"+this.tableData[index].userId).then(res =>{
+                    axios.delete("/admin/messageDelete/"+this.tableData[index].userName).then(res =>{
                         if(res.data == '200'){
                             this.$message("删除成功！");
                             this.tableData.splice(index,1);
@@ -260,21 +260,21 @@
                 });
 
             },
-            //  响应重置密码
+            //  响应屏蔽
             onReset:function (index) {
                 {
                     //确认提示
-                    this.$confirm("确认要删除密码吗？","提示",{
+                    this.$confirm("确认要屏蔽字吗？","提示",{
                         confirmButtonText:'确定',
                         cancelButtonText:'取消',
                         type:'warning'
                     }).then(() => {
                         //重置
-                        axios.delete("/admin/reset/"+this.tableData[index].userId).then(res =>{
-                            if(res.data == '200'){
-                                this.$message("重置成功！");
-                                this.tableData.splice(index,1);
-                            }
+                        axios.delete("/admin/reset/"+this.tableData[index].userName).then(res =>{
+
+                                this.$message("已经屏蔽恶意语言!");
+                                this.tableData.splice(index,1,res.data);
+
                         })
                     });
 
