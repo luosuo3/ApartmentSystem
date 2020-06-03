@@ -38,17 +38,17 @@ public class MessageController {
     @PutMapping(value = "/admin/messageModefy", produces = "application/json")
     @ResponseBody
     public Message edit(@RequestBody Message message, HttpServletRequest request) {
-        Message message1 = messageMapper.selectByPrimaryKey(message.getUserName());
+        Message message1 = messageMapper.selectByPrimaryKey(message.getId());
         message1.setDescription(message.getDescription());
         messageMapper.updateByPrimaryKeySelective(message1);
         return message1;
     }
 
-    @RequestMapping(value = "/admin/messageDelete/{userName}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/admin/messageDelete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String delete(@PathVariable String userName) {
+    public String delete(@PathVariable int id) {
         try {
-            messageMapper.deleteByPrimaryKey(userName);
+            messageMapper.deleteByPrimaryKey(id);
             return "200";
         } catch (Exception e) {
             return "500";
@@ -56,10 +56,10 @@ public class MessageController {
 
     }
 
-    @RequestMapping(value = "/admin/reset/{userName}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/admin/reset/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public Message reset(@PathVariable String userName) {
-        Message message = messageMapper.selectByPrimaryKey(userName);
+    public Message reset(@PathVariable int id) {
+        Message message = messageMapper.selectByPrimaryKey(id);
         message.setDescription(ShieldUtil.replace(message.getDescription())
         );
         messageMapper.updateByPrimaryKey(message);

@@ -9,6 +9,8 @@ import lombok.Data;
  */
 @Data
 public class Message implements Serializable {
+    private Integer id;
+
     private String userName;
 
     private Integer userType;

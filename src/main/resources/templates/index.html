@@ -6,6 +6,9 @@
     <link rel='stylesheet' href='https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css'>
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Montserrat:500,700&amp;display=swap'>
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/app.js"></script>
+    <script src="js/holder.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 
 </head>
 <body>
@@ -15,8 +18,8 @@
         <div class="segment">
             <h1>欢迎使用公寓管理系统</h1>
         </div>
-
-<!--        <label>-->
+        <h3 th:if="${session.error!=null}" th:text="${session.error}" style="color: red"></h3>
+        <label>
             <input type="text" placeholder="账号" name="username" />
         </label>
         <label>
@@ -28,7 +31,7 @@
 
         <div class="segment">
             <button class="unit" type="button"><i class="icon ion-md-arrow-back"></i></button>
-            <button class="unit" type="button"><i class="icon ion-md-bookmark"></i></button>
+            <a href="/registered"  class="list-group-item active"  type="button" data-toggle="modal" data-target="#login-modal"><button class="unit" type="button"><i class="icon ion-md-bookmark"></i></button></a>
             <button class="unit" type="button"><i class="icon ion-md-settings"></i></button>
         </div>
 

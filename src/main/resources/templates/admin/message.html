@@ -147,6 +147,7 @@
                 },
 
                 mymodel:{
+                    id:'',
                     userName:'',
                     userType:'1',
                     titile:'',
@@ -176,6 +177,7 @@
             onAdd:function () {
                 //清空表单
                 this.mymodel = {
+                    id:'',
                     userName:'',
                     userType:'1',
                     titile:'',
@@ -213,13 +215,11 @@
                 this.selectedIndex = index;
                 //回填数据
                 this.mymodel = {
-                    userId:this.tableData[index].userId,
-                    userLoginId:this.tableData[index].userLoginId,
+                    id:this.tableData[index].id,
                     userName:this.tableData[index].userName,
-                    email:this.tableData[index].email,
-                    mobile:this.tableData[index].mobile,
                     userType:this.tableData[index].userType,
-                    currentStatus:this.tableData[index].currentStatus
+                    titile:this.tableData[index].titile,
+                    description:this.tableData[index].description
                 };
 
                 //显示对话框
@@ -251,7 +251,7 @@
                     type:'warning'
                 }).then(() => {
                     //删除
-                    axios.delete("/admin/messageDelete/"+this.tableData[index].userName).then(res =>{
+                    axios.delete("/admin/messageDelete/"+this.tableData[index].id).then(res =>{
                         if(res.data == '200'){
                             this.$message("删除成功！");
                             this.tableData.splice(index,1);
@@ -270,7 +270,7 @@
                         type:'warning'
                     }).then(() => {
                         //重置
-                        axios.delete("/admin/reset/"+this.tableData[index].userName).then(res =>{
+                        axios.delete("/admin/reset/"+this.tableData[index].id).then(res =>{
 
                                 this.$message("已经屏蔽恶意语言!");
                                 this.tableData.splice(index,1,res.data);

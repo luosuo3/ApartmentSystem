@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.apartment.management.mapper.MessageMapper">
   <resultMap id="BaseResultMap" type="com.apartment.management.model.Message">
-    <id column="user_name" jdbcType="VARCHAR" property="userName" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="user_type" jdbcType="INTEGER" property="userType" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="description" jdbcType="VARCHAR" property="description" />
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    user_name, user_type, title, description
+    id, user_name, user_type, title, description
   </sql>
   <select id="selectByExample" parameterType="com.apartment.management.model.MessageExample" resultMap="BaseResultMap">
     select
@@ -82,15 +83,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from message
-    where user_name = #{userName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from message
-    where user_name = #{userName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.apartment.management.model.MessageExample">
     delete from message
@@ -98,15 +99,18 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" keyColumn="user_name" keyProperty="userName" parameterType="com.apartment.management.model.Message" useGeneratedKeys="true">
-    insert into message (user_type, title, description
-      )
-    values (#{userType,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
-      )
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.apartment.management.model.Message" useGeneratedKeys="true">
+    insert into message (user_name, user_type, title, 
+      description)
+    values (#{userName,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" keyColumn="user_name" keyProperty="userName" parameterType="com.apartment.management.model.Message" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.apartment.management.model.Message" useGeneratedKeys="true">
     insert into message
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userName != null">
+        user_name,
+      </if>
       <if test="userType != null">
         user_type,
       </if>
@@ -118,6 +122,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
       <if test="userType != null">
         #{userType,jdbcType=INTEGER},
       </if>
@@ -138,6 +145,9 @@
   <update id="updateByExampleSelective" parameterType="map">
     update message
     <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
       <if test="record.userName != null">
         user_name = #{record.userName,jdbcType=VARCHAR},
       </if>
@@ -157,7 +167,8 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update message
-    set user_name = #{record.userName,jdbcType=VARCHAR},
+    set id = #{record.id,jdbcType=INTEGER},
+      user_name = #{record.userName,jdbcType=VARCHAR},
       user_type = #{record.userType,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR}
@@ -168,6 +179,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.apartment.management.model.Message">
     update message
     <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
       <if test="userType != null">
         user_type = #{userType,jdbcType=INTEGER},
       </if>
@@ -178,13 +192,14 @@
         description = #{description,jdbcType=VARCHAR},
       </if>
     </set>
-    where user_name = #{userName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.apartment.management.model.Message">
     update message
-    set user_type = #{userType,jdbcType=INTEGER},
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR}
-    where user_name = #{userName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -39,6 +39,7 @@ public class IndexController {
                 model.addAttribute("roomNums", room_nums);
                 return "/user/room_book";
             } else {
+                request.getSession().setAttribute("error","密码错误重新输入!");
                 return "/index";
             }
         } else if (users.get(0).getType()==1) {
@@ -50,9 +51,11 @@ public class IndexController {
                 model.addAttribute("roomManages",roomManages);
                 return "/admin/room_management";
             } else {
+                 request.getSession().setAttribute("error","密码错误重新输入!");
                 return "/index";
             }
         }
+        request.getSession().setAttribute("error","密码错误重新输入!");
         return "/index";
     }
     @RequestMapping("/logout")
@@ -61,6 +64,19 @@ public class IndexController {
         session.invalidate();
         // 重定向到登录页面的跳转方法
         return "redirect:index";
+    }
+    @GetMapping("/registered")
+    public String registered () {
+        return "/registered";
+    }
+    @PostMapping("/addUser")
+    public String addUser (HttpServletRequest request,HttpSession session,Model model,@RequestParam(name = "userName") String userName,@RequestParam(name = "passWord")String passWord) {
+        User user = new User();
+        user.setUserName(userName);
+        user.setPassword(passWord);
+        user.setType(0);
+        userMapper.insert(user);
+        return "/index";
     }
 
 }
