@@ -41,10 +41,9 @@
                         align="center"
                         width="250">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.userType == '0'">系统管理员</span>
-                        <span v-if="scope.row.userType == '1'">学生</span>
-                        <span v-if="scope.row.userType == '2'">老师</span>
-                        <span v-if="scope.row.userType == '4'">教工</span>
+                        <span v-if="scope.row.userType == '0'">普通用户</span>
+                        <span v-if="scope.row.userType == '1'">管理员</span>
+
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -252,9 +251,11 @@
                 }).then(() => {
                     //删除
                     axios.delete("/admin/messageDelete/"+this.tableData[index].id).then(res =>{
-                        if(res.data == '200'){
+                        if (res.data == '200') {
                             this.$message("删除成功！");
-                            this.tableData.splice(index,1);
+                            this.tableData.splice(index, 1);
+                        } else {
+                            this.$message("删除失败!");
                         }
                     })
                 });

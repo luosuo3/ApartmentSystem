@@ -341,6 +341,6 @@
         FROM
            room_manage
         WHERE
-           check_in=0
+           check_in=0 and status=0
     </select>
 </mapper>

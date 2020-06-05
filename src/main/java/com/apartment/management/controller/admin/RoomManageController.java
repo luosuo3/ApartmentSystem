@@ -20,6 +20,7 @@ import java.util.List;
 
 @Controller
 public class RoomManageController {
+
     private int roomId;
     @Autowired
     RoomManageMapper roomManageMapper;

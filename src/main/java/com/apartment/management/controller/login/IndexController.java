@@ -32,10 +32,11 @@ public class IndexController {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andUserNameEqualTo(username);
         List<User> users = userMapper.selectByExample(userExample);
-        request.getSession().setAttribute("user",users.get(0));
+
         if (users.get(0).getType()==0) {
             if (users.get(0).getUserName().equals(username) && users.get(0).getPassword().equals(password)) {
                 List<Integer> room_nums = roomManageMapper.findAllRoomNums();
+                request.getSession().setAttribute("user",users.get(0));
                 model.addAttribute("roomNums", room_nums);
                 return "/user/room_book";
             } else {
@@ -49,6 +50,7 @@ public class IndexController {
                 roomManageExample.createCriteria().andIdIsNotNull();
                 List<RoomManage> roomManages = roomManageMapper.selectByExample(roomManageExample);
                 model.addAttribute("roomManages",roomManages);
+                request.getSession().setAttribute("user",users.get(0));
                 return "/admin/room_management";
             } else {
                  request.getSession().setAttribute("error","密码错误重新输入!");
@@ -70,7 +72,7 @@ public class IndexController {
         return "/registered";
     }
     @PostMapping("/addUser")
-    public String addUser (HttpServletRequest request,HttpSession session,Model model,@RequestParam(name = "userName") String userName,@RequestParam(name = "passWord")String passWord) {
+    public String addUser (@RequestParam(name = "userName") String userName,@RequestParam(name = "passWord")String passWord) {
         User user = new User();
         user.setUserName(userName);
         user.setPassword(passWord);

@@ -22,7 +22,7 @@ public class RoomController {
     BookRoomMapper bookRoomMapper;
     @Autowired
     RoomManageMapper roomManageMapper;
-    @GetMapping("roombook")
+    @GetMapping("/roombook")
     public String roomBook(Model model) {
         List<Integer> room_nums = roomManageMapper.findAllRoomNums();
         model.addAttribute("roomNums", room_nums);

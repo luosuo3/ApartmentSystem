@@ -30,7 +30,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         }else{
             // 2 开始进行认证和鉴权
             // 2.1 身份认证: 通过获取 Session 并判断是否已经登录
-            User user = (User)request.getSession().getAttribute("USER_SESSION");
+            User user = (User)request.getSession().getAttribute("user");
             if (user == null) {
                 // 如果未登录，直接跳转到登录页面
                 request.setAttribute("message", "请先登录!");

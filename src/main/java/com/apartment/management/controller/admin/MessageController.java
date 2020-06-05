@@ -5,6 +5,7 @@ import com.apartment.management.model.Message;
 import com.apartment.management.model.MessageExample;
 import com.apartment.management.utils.ShieldUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ import java.util.List;
  */
 @Controller
 @CrossOrigin
+
 public class MessageController {
     @Autowired
     MessageMapper messageMapper;
@@ -26,15 +28,17 @@ public class MessageController {
         return "admin/message";
     }
 
+    @Cacheable(cacheNames = "messages")
     @GetMapping("/admin/messages")
     @ResponseBody
     public List<Message> messages() {
+        System.out.println("使用非缓存方式查询数据");
         MessageExample messageExample = new MessageExample();
         messageExample.createCriteria().andUserNameIsNotNull();
         List<Message> messages = messageMapper.selectByExample(messageExample);
         return messages;
     }
-
+    @Cacheable(cacheNames = "messagesModefy")
     @PutMapping(value = "/admin/messageModefy", produces = "application/json")
     @ResponseBody
     public Message edit(@RequestBody Message message, HttpServletRequest request) {
@@ -43,7 +47,6 @@ public class MessageController {
         messageMapper.updateByPrimaryKeySelective(message1);
         return message1;
     }
-
     @RequestMapping(value = "/admin/messageDelete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public String delete(@PathVariable int id) {
@@ -55,7 +58,6 @@ public class MessageController {
         }
 
     }
-
     @RequestMapping(value = "/admin/reset/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public Message reset(@PathVariable int id) {

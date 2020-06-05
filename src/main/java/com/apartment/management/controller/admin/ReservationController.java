@@ -7,6 +7,7 @@ import com.apartment.management.model.BookRoomExample;
 import com.apartment.management.model.RoomManage;
 import com.apartment.management.model.RoomManageExample;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -25,7 +26,6 @@ public class ReservationController {
     BookRoomMapper bookRoomMapper;
     @Autowired
     RoomManageMapper roomManageMapper;
-
     @GetMapping("/reservation_management")
     public String resetvation(Model model) {
         BookRoomExample bookRoomExample = new BookRoomExample();
@@ -84,7 +84,7 @@ public class ReservationController {
         model.addAttribute("bookRooms", bookRooms);
         return "admin/reservation_management";
     }
-
+//事务管理
     @Transactional
     @PostMapping("/define")
     public  String define(HttpServletRequest request,Model model) {
