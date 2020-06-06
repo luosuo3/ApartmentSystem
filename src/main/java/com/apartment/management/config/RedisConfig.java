@@ -1,4 +1,4 @@
-package com.apartment.management.controller.config;
+package com.apartment.management.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
